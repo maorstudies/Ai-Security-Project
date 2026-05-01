@@ -1,13 +1,14 @@
 import cv2
 import os
 from moviepy import VideoFileClip
+import shutil
 
 def run_preprocessing(video_path, frames_folder, audio_path):
-    #Create folder for frames
-    if not os.path.exists(frames_folder):
-        os.makedirs(frames_folder)
+    # מחיקת התיקייה הישנה ויצירתה מחדש
+    if os.path.exists(frames_folder):
+        shutil.rmtree(frames_folder)
+    os.makedirs(frames_folder)
 
-    #Extract Audio (for YAMNet model)
     video_clip = VideoFileClip(video_path)
     if video_clip.audio:
         video_clip.audio.write_audiofile(audio_path)
